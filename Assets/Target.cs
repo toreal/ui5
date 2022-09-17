@@ -6,6 +6,7 @@ public class Target : MonoBehaviour
 {
 
 public int points=10;
+public ParticleSystem p;
 Rigidbody targetRb;
 
 
@@ -33,8 +34,24 @@ engine=GameObject.Find("gm").GetComponent<GameManager>();
 
 
     private void OnMouseDown(){
-        engine.UpdateScore(points);
+        if ( engine.isActive)
+        {
+Instantiate(p,transform.position, p.transform.rotation);
+       
+
+if (gameObject.CompareTag("bad"))
+{
+    engine.GameOver();
+}else
+{
+    engine.UpdateScore(points);
         Destroy(gameObject);
+}
+
+         
+
+        }
+       
 
     }
 
