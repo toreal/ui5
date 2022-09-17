@@ -13,11 +13,26 @@ public class GameManager : MonoBehaviour
   public TextMeshProUGUI gameOverText;
 
   public Button restartBtn;
+  public GameObject title;
+ //int difficulty =1;
 
+ float spawnRate=1;
 
 
  private int score;
- public bool isActive = true;
+ public bool isActive = false;
+
+
+void startGame(int difficulty){
+spawnRate= spawnRate/difficulty;
+isActive=true;
+title.SetActive(false);
+ StartCoroutine(Spawntarget());
+        score =0;
+         scoreText.text ="Score:"+score;
+
+}
+
 
 
 public void restart(){
@@ -27,10 +42,17 @@ public void restart(){
 }
 
 
+public void setDifficulty(int difficulty){
+
+startGame(difficulty);
+
+}
+
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Spawntarget());
+       // StartCoroutine(Spawntarget());
         score =0;
         scoreText.text ="Score:"+score;
         //GameOver();
@@ -48,7 +70,7 @@ public void restart(){
     IEnumerator Spawntarget(){
         while(isActive){
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(spawnRate);
             int index = Random.Range(0, targets.Count);
             Instantiate(targets[index]);
         }
